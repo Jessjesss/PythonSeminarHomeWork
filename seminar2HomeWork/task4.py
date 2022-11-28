@@ -7,6 +7,7 @@
 # -2 -1 0 1 2
 # Позиции: 0,1 -> 2
 
+a = []
 with open('file.txt','r') as f:
     a = f.read().split('\n')
 print(a)
