@@ -7,7 +7,6 @@
 
 n = int(input('Введите число N: '))
 list_n = []
-for i in range(1, n):
-    list_n = (1+1/i)**i
-    print(list_n, end = ', ')
-print((1+1/n)**n)
+for i in range(1, n+1):
+    list_n.append((1+1/i)**i)
+print(list_n)
