@@ -7,7 +7,10 @@
 
 import math
 d = input('Задайте точность: ')
-d = d.replace('.', '').replace(',', '')
-print(d)
-# print(round(math.pi, d))
+if ('.') in d or (',') in d:
+    d = d.replace('.', '').replace(',', '')
+    d = len(d)-1
+else:
+    d = int(d)
+print(round(math.pi, d))
 

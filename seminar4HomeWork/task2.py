@@ -6,6 +6,11 @@
 
 import sympy
 n = int(input('Введите натуральное число n: '))
-
-list(sympy.primerange(0, 100))
-print(list)
+list_s = list(sympy.primerange(n))
+res = []
+for i in range(len(list_s)):
+    if n % list_s[i] == 0:
+        res.append(list_s[i])
+    else:
+        i += i
+print(res)
