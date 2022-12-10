@@ -8,9 +8,6 @@
 # k=3 => 2*x^3 + 4*x^2 + 4*x + 5
 
 from random import randint
-from sympy import symbols
-from math import prod
- 
 
 k = int(input('Введите натуральную степень k:'))
 
