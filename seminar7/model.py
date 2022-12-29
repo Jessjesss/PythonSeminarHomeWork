@@ -1,10 +1,13 @@
-from bisect import bisect_left
 
-def search_data(record, wordtofind):
+def search_data(base, record):
 
-    words = []
-    for line in record:
-        words.extend(line.strip().split(','))
-    ind = bisect_left(words,wordtofind)
-    if words[ind] == wordtofind:
-    print ('%s was found!' % wordtofind)
+    base = base.split('\n')
+    flag = True
+    results = []
+    for i in base:
+        if record in i:
+            flag = False
+            results.append(i)
+    if flag:
+        results.append(f'Контакт {record} не найден!')
+    return results

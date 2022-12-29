@@ -13,8 +13,12 @@ def cont_to_s():
 def record_number():
     surname = input('Введите фамилию: ')
     number = input('Введите номер: ')
-    return f'{surname},{number}'
+    return f'{surname};{number}'
+
+
+def print_result(result):
+    for i in result:
+        print('Результат:' , i)
 
 
 
-    
