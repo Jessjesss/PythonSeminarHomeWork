@@ -28,29 +28,37 @@ def send_help(message):
 	bot.reply_to(message, "Условие игры: На столе лежит 117 конфет. \nИграют два игрока делая ход друг после друга. \nПервый ход определяется жеребьёвкой. За один ход можно забрать не более чем 28 конфет. \nВсе конфеты оппонента достаются сделавшему последний ход.")
 
 @bot.message_handler(commands=['start'])
-def echo_all(message):
+def start_game(message):
     global candies
     bot.send_message(message.chat.id, f'На столе лежит: {str(candies)} конфет')
     determing_moves = choice(['User', 'Bot'])
     bot.send_message(message.chat.id, f'Первым ходит:  {determing_moves}')
-    while candies > 28:
-        if determing_moves == 'Bot':
-            rand = randint(1, 29)
-            bot.send_message(message.chat.id, f'Бот взял: {rand} конфет')
-            candies = int(candies) - rand
-            bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
-            bot.send_message(message.chat.id, f'User, твой ход!')
-            determing_moves = 'User'
-            candies = candies[message.chat.id] - int(message.text)
-            bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
-        elif determing_moves == 'User':
-            candies = candies[message.chat.id] - int(message.text)
-            bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
-            determing_moves = 'Bot'
     if determing_moves == 'Bot':
-        bot.send_message(message.chat.id, 'Выиграл User!')
-    else:
-        bot.send_message(message.chat.id, 'Выиграл Бот!')
+        rand = randint(1, 29)
+        bot.send_message(message.chat.id, f'Бот взял: {rand} конфет')
+        candies = int(candies) - rand
+        bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
+        bot.send_message(message.chat.id, f'User, твой ход!')
+
+
+def count_candies(candies, message):
+    candies = candies[message.chat.id] - int(message.text)
+
+
+@bot.message_handler(func=count_candies)
+def echo_all(message):
+    bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
+    bot.send_message(message.chat.id, 'Теперь ходит бот!')
+    rand = randint(1, 29)
+    bot.send_message(message.chat.id, f'Бот взял: {rand} конфет')
+    candies = int(candies) - rand
+    bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
+    bot.send_message(message.chat.id, f'User, твой ход!')
+
+    # if determing_moves == 'Bot':
+    #     bot.send_message(message.chat.id, f'Выиграл User!')
+    # else:
+    #     bot.send_message(message.chat.id, 'Выиграл Бот!')
     
 bot.infinity_polling()
 
