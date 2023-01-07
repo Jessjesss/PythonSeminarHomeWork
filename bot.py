@@ -7,7 +7,6 @@ bot = telebot.TeleBot(TOKEN)
 
 candies = 117
 
-max_move = 28
 
     # count_for_check_win = candies // max_move
     # determing_moves = randint(0, 1)
@@ -42,12 +41,12 @@ def echo_all(message):
             bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
             bot.send_message(message.chat.id, f'User, твой ход!')
             determing_moves = 'User'
+            candies = candies[message.chat.id] - int(message.text)
+            bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
         elif determing_moves == 'User':
-            if message.text <= 28:
-                candies = candies[message.chat.id] - int(message.text)
-                bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
-            else:
-                bot.send_message(message.chat.id, f'Введите корректное количество конфет')
+            candies = candies[message.chat.id] - int(message.text)
+            bot.send_message(message.chat.id, f'Осталось: {candies} конфет')
+            determing_moves = 'Bot'
     if determing_moves == 'Bot':
         bot.send_message(message.chat.id, 'Выиграл User!')
     else:
