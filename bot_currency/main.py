@@ -4,11 +4,27 @@ from cfg import TOKEN
 
 bot = telebot.TeleBot(TOKEN)
 
-res = ''
 
-def get_valute(res):
+def get_usd():
+    result = []
     res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
-    return res
+    result = res['Valute']["USD"]['Name'], res['Valute']["USD"]['Value']
+    values = ' '.join(str(i) for i in result)
+    return(values)
+
+def get_eur():
+    result = []
+    res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
+    result = res['Valute']["EUR"]['Name'], res['Valute']["EUR"]['Value']
+    values = ' '.join(str(i) for i in result)
+    return(values)
+
+def get_cny():
+    result = []
+    res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
+    result = res['Valute']["CNY"]['Name'], res['Valute']["CNY"]['Value']
+    values = ' '.join(str(i) for i in result)
+    return(values)
 
 @bot.message_handler(commands=['start'])
 def start_game(message):
@@ -22,15 +38,12 @@ def start_game(message):
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
-    get_valute(res)
     if message.text.lower == 'usd' or 'доллар':
-        bot.send_message(message.chat.id, (res['Valute']["USD"]['Name'], res['Valute']["USD"]['Value']))
+        bot.send_message(message.chat.id, get_usd())
     elif message.text.lower == 'eur' or 'евро':
-        bot.send_message(message.chat.id, (res['Valute']["EUR"]['Name'], res['Valute']["EUR"]['Value']))
+        bot.send_message(message.chat.id, get_eur())
     elif message.text.lower == 'cny' or 'юань' or 'китайский юань':
-        bot.send_message(message.chat.id, (res['Valute']["CNY"]['Name'], res['Valute']["CNY"]['Value']))
-    elif message.text.lower == 'eur' or 'евро':
-        bot.send_message(message.chat.id, (res['Valute']["EUR"]['Name'], res['Valute']["EUR"]['Value']))
+        bot.send_message(message.chat.id, get_cny())
     else:
         bot.send_message(message.chat.id, 'Введите доллар, евро или юань!')
 
