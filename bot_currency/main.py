@@ -36,14 +36,26 @@ def start_game(message):
     bot.send_message(message.chat.id, 'Доступен курс на 3 валюты: доллар, евро, китайский юань')
 
 
-@bot.message_handler(func=get_usd())
+@bot.message_handler(content_types=['text'])
 def send_text(message):
     if message.text.lower == 'usd' or 'доллар':
-        bot.send_message(message.chat.id, get_usd())
+        result = []
+        res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
+        result = res['Valute']["USD"]['Name'], res['Valute']["USD"]['Value']
+        values_usd = ' '.join(str(i) for i in result)
+        bot.send_message(message.chat.id, values_usd)
     elif message.text.lower == 'eur' or 'евро':
-        bot.send_message(message.chat.id, get_eur())
+        result = []
+        res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
+        result = res['Valute']["EUR"]['Name'], res['Valute']["EUR"]['Value']
+        values_eur = ' '.join(str(i) for i in result)
+        bot.send_message(message.chat.id, values_eur)
     elif message.text.lower == 'cny' or 'юань' or 'китайский юань':
-        bot.send_message(message.chat.id, get_cny())
+        result = []
+        res = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()
+        result = res['Valute']["CNY"]['Name'], res['Valute']["CNY"]['Value']
+        values_cny = ' '.join(str(i) for i in result)
+        bot.send_message(message.chat.id, values_cny)
     else:
         bot.send_message(message.chat.id, 'Введите доллар, евро или юань!')
 
