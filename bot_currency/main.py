@@ -48,11 +48,11 @@ def start_game(message):
 
 @bot.message_handler(content_types=['text'])
 def send_text(message):
-    if message.text.strip() == 'usd' or 'доллар' or 'Доллар':
+    if message.text.strip() == ('usd' or 'доллар' or 'Доллар'):
         bot.send_message(message.chat.id, get_usd())
-    elif message.text.strip() == 'eur' or 'евро' or 'Евро':
+    elif message.text.strip() == ('eur' or 'евро' or 'Евро'):
         bot.send_message(message.chat.id, get_eur())
-    elif message.text.strip() == 'cny' or 'юань' or 'Юань':
+    elif message.text.strip() == ('cny' or 'юань' or 'Юань'):
         bot.send_message(message.chat.id, get_cny())
     else:
         bot.send_message(message.chat.id, 'Напишите: доллар или usd,\n евро или eur, \n юань или cny!')
